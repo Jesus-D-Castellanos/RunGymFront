@@ -11,51 +11,38 @@ namespace RunGymFront.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int Id { get; set; }
 
-
-        [Required]
         [ForeignKey("Usuario")]
         public int IdUsuario { get; set; }
 
-
-        [Required]
-        [StringLength(100)]
         [Display(Name = "Meta Principal")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [StringLength(100, ErrorMessage = "El {0} no puede exceder 100 caracteres")]
         public string MetaPrincipal { get; set; }
 
-
-        [StringLength(500)]
         [Display(Name = "Cuerpo Actual")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [StringLength(100, ErrorMessage = "El {0} no puede exceder 100 caracteres")]
         public string CuerpoActual { get; set; }
 
-
-        [StringLength(500)]
         [Display(Name = "Cuerpo Deseado")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [StringLength(100, ErrorMessage = "El {0} no puede exceder 100 caracteres")]
         public string CuerpoDeseado { get; set; }
 
+        [Display(Name = "Descripción")]
+        [StringLength(1000, ErrorMessage = "La {0} no puede exceder 1000 caracteres")]
+        public string Descripción { get; set; }
 
+        [Display(Name = "Fecha del Objetivo")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [DataType(DataType.Date)]
-        [Display(Name = "Última vez que tuvo el cuerpo ideal")]
-        public DateTime Ultimavez_CuerpoIdeal { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime FechaObjetivo { get; set; } = DateTime.UtcNow;
 
-
-        [DataType(DataType.Date)]
-        [Display(Name = "Fecha de Inicio")]
-        public DateTime FechaInicio { get; set; }
-
-
-        [DataType(DataType.Date)]
-        [Display(Name = "Fecha de Fin")]
-        public DateTime FechaFin { get; set; }
-
-
-        [Range(0, 100)]
-        [Display(Name = "Progreso")]
-        public int Progreso { get; set; }
-
-
-        [NotMapped]
-        public string ResumenMeta => $"{MetaPrincipal} - {Progreso}%";
+        [Display(Name = "Fecha de Registro")]
+        public DateTime FechaRegistro { get; set; } = DateTime.Now;
     }
 }

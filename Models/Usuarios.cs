@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace RunGymFront.Models
 {
@@ -13,68 +14,78 @@ namespace RunGymFront.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "El nombre es obligatorio.")]
-        [StringLength(50, ErrorMessage = "El nombre no puede tener más de 50 caracteres.")]
-        public string Nombre { get; set; }
+        [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [StringLength(100, ErrorMessage = "El {0} no puede exceder 100 caracteres")]
+        public string Nombre { get; set; } = string.Empty;
 
+        [Display(Name = "Apellido")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [StringLength(100, ErrorMessage = "El {0} no puede exceder 100 caracteres")]
+        public string Apellido { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "El apellido es obligatorio.")]
-        [StringLength(50, ErrorMessage = "El apellido no puede tener más de 50 caracteres.")]
-        public string Apellido { get; set; }
+        [Display(Name = "Tipo de Documento")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        public string TipoDocumento { get; set; } = string.Empty;
 
+        [Display(Name = "Documento")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [StringLength(20, ErrorMessage = "El {0} no puede exceder 20 caracteres")]
+        public string Documento { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "La contraseña es obligatoria.")]
+        [Display(Name = "Correo")]
+        [EmailAddress(ErrorMessage = "El email no tiene un formato válido")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        public string Correo { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "La {0} es obligatoria")]
         [DataType(DataType.Password)]
-        public string Contrasena { get; set; }
+        [StringLength(100, MinimumLength = 4, ErrorMessage = "La {0} debe de ser de 4 caracteres.")]
+        public string Contraseña { get; set; } = string.Empty;
 
+        [Display(Name = "Confirmar Contraseña")]
+        [DataType(DataType.Password)]
+        [Compare("Contraseña", ErrorMessage = "Las contraseñas no coinciden")]
+        public string ConfirmarContraseña { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "El género es obligatorio.")]
-        [RegularExpression(@"^[MF]$", ErrorMessage = "El género debe ser 'M' o 'F'.")]
-        public char Genero { get; set; }
+        [Display(Name = "Celular")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [Phone(ErrorMessage = "Ingrese un número de teléfono válido")]
+        public string Celular { get; set; } = string.Empty;
 
+        [Display(Name = "Género")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        public string Genero { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "La fecha de nacimiento es obligatoria.")]
+        [Display(Name = "Fecha de Nacimiento")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [DataType(DataType.Date)]
-        public DateTime FechaNacimiento { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime FechaNacimiento { get; set; } = DateTime.UtcNow;
 
+        [Display(Name = "Peso (kg)")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [Range(0, 200, ErrorMessage = "El {0} debe estar entre 1 y 200 kg")]
+        public int Peso { get; set; }
 
-        [Required(ErrorMessage = "El email es obligatorio.")]
-        [EmailAddress(ErrorMessage = "El email no tiene un formato válido.")]
-        public string Email { get; set; }
-
-
-        [Required(ErrorMessage = "El tipo de usuario es obligatorio.")]
-        public string TipoUsuario { get; set; }
-
-
-        [Range(0, 500, ErrorMessage = "El peso debe estar entre 0 y 500 kg.")]
-        public Decimal Peso { get; set; }
-
-
-        [Range(0, 3, ErrorMessage = "La altura debe estar entre 0 y 3 metros.")]
+        [Display(Name = "Altura")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [Range(1.00, 2.50, ErrorMessage = "La {0} debe estar entre 1.10 y 2.50 metros")]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Ingrese la altura con punto decimal (ej: 1.75)")]
         public Decimal Altura { get; set; }
 
+        [Display(Name = "Horas de Sueño")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        [Range(4, 12, ErrorMessage = "Las {0} deben estar entre 4 y 12 horas")]
+        public byte HorasSueno { get; set; }
 
-        [Range(0, 24, ErrorMessage = "Las horas de sueño deben estar entre 0 y 24 horas.")]
-        public Decimal HorasSueno { get; set; }
+        [Display(Name = "Consumo de Agua (litros)")]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
+        public string ConsumoAgua { get; set; } = string.Empty;
 
+        [Display(Name = "Fecha de Registro")]
+        public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-        [Required(ErrorMessage = "El consumo de agua es obligatorio.")]
-        public string ConsumoAgua { get; set; }
-
-
-        [Range(0, 500, ErrorMessage = "El peso deseado debe estar entre 0 y 500 kg.")]
-        public Decimal PesoDeseado { get; set; }
-
-
-        [Required(ErrorMessage = "El tipo de cuerpo es obligatorio.")]
-        public string TipoCuerpo { get; set; }
-
-
-        [Required(ErrorMessage = "El cuerpo deseado es obligatorio.")]
-        public string CuerpoDeseado { get; set; }
-
-
-        public string ResumenBienestar { get; set; }
     }
 }

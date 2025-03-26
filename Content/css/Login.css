@@ -18,11 +18,6 @@
         text-align: center;
     }
 
-    .login-container img {
-        display: block;
-        margin: 0 auto 20px;
-    }
-
     .login-container h3 {
         margin-bottom: 30px;
         color: #e9ecef;

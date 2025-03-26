@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿ using Newtonsoft.Json;
 using RunGymFront.Models;
 using System;
 using System.Configuration;
@@ -29,7 +29,7 @@ namespace RunGymFront.Controllers
 
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login","Login");
             }
 
             using (var client = new HttpClient())
@@ -49,7 +49,6 @@ namespace RunGymFront.Controllers
 
                 }
             }
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -59,7 +58,7 @@ namespace RunGymFront.Controllers
         {
             Session.RemoveAll();
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Welcome", "Login");
         }
 
         private void CookieUpdate(Login usuario)
@@ -71,17 +70,12 @@ namespace RunGymFront.Controllers
                 false,
                 JsonConvert.SerializeObject(usuario)
             );
-            Session["Username"] = usuario.Contrasena;
+            Session["Correo"] = usuario.Contraseña;
             var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket)) { };
             Response.AppendCookie(cookie);
         }
 
         public ActionResult Welcome()
-        {
-            return View();
-        }
-
-        public ActionResult Registro()
         {
             return View();
         }

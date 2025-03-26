@@ -1,129 +1,94 @@
-﻿
+﻿@model RunGymFront.Models.Metas
 @{
     Layout = null;
 }
 
-<!DOCTYPE html>
-<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Metas</title>
+    <title>Metas y Objetivos | RunGym</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-            body {
-                font-family: 'Arial', sans-serif;
-                background-color: #ffffff;
-                color: #ffffff;
-            }
-
-        header {
-            text-align: center;
-            padding: 20px;
-            background-color: #4b0082;
-        }
-
-            h1 {
-                color: #ffffff;
-                font-size: 3rem;
-                margin-bottom: 10px;
-            }
-
-        h2 {
-            color: #ccccff;
-            font-size: 1.5rem;
-        }
-
-            .form-section {
-                max-width: 800px;
-                margin: 30px auto;
-                padding: 20px;
-                background-color: #ffffff;
-                border-radius: 10px;
-                box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-            label {
-                display: block;
-                margin-bottom: 5px;
-                font-size: 1.2rem;
-            }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #4b0082;
-            border-radius: 5px;
-            background-color: #ffffff;
-            color: #fff;
-            font-size: 1rem;
-        }
-
-            textarea {
-                resize: none;
-                height: 100px;
-            }
-
-        button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            font-size: 1.2rem;
-            color: #fff;
-            background-color: #4b0082;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-            button:hover {
-                background-color: #6a0dad;
-            }
-
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/Metas.css" rel="stylesheet" />
 </head>
-<body style="background-image: url('../../images/Login/Fondo.jpg'); background-size: cover; background-position: center;">
-    <div class="container text-center">
-        <div class="row justify-content-center align-items-center">
-            <div class="col-md-6">
-                <img src="~/images/Login/logo.jpg" alt="RunGym Logo" class="mb-3" style="width: 150px; height: auto;">
-                <h1>RunGym</h1>
-                <h2>Metas y Objetivos</h2>
-                <form action="inicio1.html">
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Nombre Completo" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="genero" class="form-label">Género:</label>
-                        <select class="form-select" id="genero" required>
-                            <option value="masculino">Masculino</option>
-                            <option value="femenino">Femenino</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="meta" class="form-label">Meta Principal:</label>
-                        <select class="form-select" id="meta" required>
-                            <option value="">Perder peso</option>
-                            <option value="">Ganar peso</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
+
+<div class="container">
+    <div class="form-container">
+        <div class="logo-container text-center mb-4">
+            <img src="~/images/Login/Logo.png" alt="RunGym Logo" class="logo img-fluid">
         </div>
-        <a href="inicio metas.html" class="btn btn-primary">Siguiente</a>
+
+        <h2 class="text-center">Metas y Objetivos</h2>
+        <p class="text-center lead mb-4">Completa tus datos para personalizar tu experiencia</p>
+
+        @using (Html.BeginForm("Metas", "Metas", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="mb-4">
+                @Html.LabelFor(m => m.MetaPrincipal)
+                @Html.DropDownListFor(m => m.MetaPrincipal, new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "Seleccione una opción", Value = "" },
+                    new SelectListItem { Text = "Perder peso", Value = "Perder peso" },
+                    new SelectListItem { Text = "Ganar peso/Músculo", Value = "Ganar peso/Músculo" },
+                }, new { @class = "form-select" })
+                @Html.ValidationMessageFor(m => m.MetaPrincipal, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="mb-4">
+                @Html.LabelFor(m => m.CuerpoActual)
+                @Html.TextBoxFor(m => m.CuerpoActual, new { @class = "form-control", placeholder = "Ej: Sobrepeso, delgado, atlético..." })
+                @Html.ValidationMessageFor(m => m.CuerpoActual, "", new { @class = "text-danger" })
+                <small class="form-text">Describe tu condición física actual</small>
+            </div>
+
+            <div class="mb-4">
+                @Html.LabelFor(m => m.CuerpoDeseado)
+                @Html.TextBoxFor(m => m.CuerpoDeseado, new { @class = "form-control", placeholder = "Ej: Definido, musculoso, saludable..." })
+                @Html.ValidationMessageFor(m => m.CuerpoDeseado, "", new { @class = "text-danger" })
+                <small class="form-text">¿Cómo te gustaría verte?</small>
+            </div>
+
+            <div class="md-4">
+                @Html.LabelFor(m => m.FechaObjetivo)
+                @Html.TextBoxFor(m => m.FechaObjetivo, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                @Html.ValidationMessageFor(m => m.FechaObjetivo, "", new { @class = "text-danger" })
+                <small class="form-text">Dijite la fecha de tu objetivo principal!</small>
+            </div>
+            <br />
+            <div class="mb-4">
+                @Html.LabelFor(m => m.Descripción)
+                @Html.TextAreaFor(m => m.Descripción, new
+                {
+                    @class = "form-control",
+                    placeholder = "Cuéntanos más sobre ti: experiencia previa, lesiones, preferencias, etc. 😊",
+                    rows = "4"
+                })
+                @Html.ValidationMessageFor(m => m.Descripción, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    Continuar <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+            </div>
+        }
     </div>
-</body>
-</html>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Efecto al enfocar los inputs
+        const inputs = document.querySelectorAll('.form-control, .form-select');
+
+        inputs.forEach(input => {
+            input.addEventListener('focus', function () {
+                this.parentElement.querySelector('.form-label').style.textShadow = 'var(--text-glow)';
+            });
+
+            input.addEventListener('blur', function () {
+                this.parentElement.querySelector('.form-label').style.textShadow = 'none';
+            });
+        });
+    });
+</script>
