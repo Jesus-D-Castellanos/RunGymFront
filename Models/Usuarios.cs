@@ -12,6 +12,7 @@ namespace RunGymFront.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int Id { get; set; }
 
         [Display(Name = "Nombre")]
@@ -45,6 +46,7 @@ namespace RunGymFront.Models
 
         [Display(Name = "Confirmar Contraseña")]
         [DataType(DataType.Password)]
+        [JsonIgnore]
         [Compare("Contraseña", ErrorMessage = "Las contraseñas no coinciden")]
         public string ConfirmarContraseña { get; set; } = string.Empty;
 

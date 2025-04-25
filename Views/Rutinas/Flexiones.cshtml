@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model RunGymFront.Models.EjercicioDto
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -14,28 +16,39 @@
     <main>
         <div class="exercise-container">
             <div class="exercise-info">
-                <h2>Ejercicio: Flexión de Diamante</h2>
-                <p><strong>Descripción:</strong> La flexión de diamante con salto es un ejercicio que fortalece los pectorales, triceps y hombros, al tiempo que mejora la agilidad y resistencia cardiovascular.</p>
+                @foreach (var detalles in Model.Detalles)
+                {
+                <h2>Ejercicio: @Model.Nombre</h2>
+                <p><strong>Descripción:</strong> @detalles.Descripcion</p>
                 <ul>
-                    <li><strong>Repeticiones:</strong> 4 series de 12 repeticiones</li>
-                    <li><strong>Descanso:</strong> 45 segundos entre series</li>
-                    <li><strong>Cuidados:</strong> Mantén las muñecas alineadas y la espalda recta para evitar lesiones. Realiza el salto de manera controlada para no caer bruscamente.</li>
+                    <li><strong>Repeticiones:</strong> @detalles.Repeticiones</li>
+                    <li><strong>Descanso:</strong> @detalles.Descanso</li>
+                    <li><strong>Cuidados:</strong> @detalles.Cuidados</li>
                 </ul>
+                }
                 <div class="steps">
                     <h3>Paso a Paso:</h3>
+                   @foreach (var paso in Model.Pasos)
+                   {
                     <ol>
-                        <li>Colócate en posición de flexión, pero con las manos juntas formando un diamante bajo el pecho.</li>
-                        <li>Haz una flexión normal, bajando el pecho hasta el suelo.</li>
-                        <li>Al subir, realiza un salto explosivo con las manos y pies, aterrizando nuevamente en la posición inicial.</li>
-                        <li>Repite el movimiento de forma controlada durante las repeticiones indicadas.</li>
+                        <li>@paso.DescripcionPaso</li>
                     </ol>
+                   }
                 </div>
             </div>
+
+
             <div class="exercise-media">
-                <img src="https://i.gifer.com/Leoh.gif" Ejercicio Flexión de Diamante ">
-            </div>
+                @foreach (var con in Model.Detalles)
+                {
+                    <img src="@con.URLVideo" />
+                }
+                </div>
+
+            
         </div>
     </main>
+
 </body>
 </html>
 

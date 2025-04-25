@@ -1,4 +1,4 @@
-﻿@model RunGymFront.Models.ErroresReportados
+@model RunGymFront.Models.ErroresReportados
 @{
     Layout = null;
 }
@@ -10,8 +10,8 @@
     <title>Reportar Error - RunGym</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="~/Content/css/Contac.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 <body>
     <!-- Partículas -->
@@ -28,20 +28,7 @@
             <div class="status-message" id="statusMessage" style="display: none;">
                 <div class="alert" id="alertBox"></div>
             </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <div class="social-links">
-                <a href="#" aria-label="Facebook" class="wave-effect"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Instagram" class="wave-effect"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="Twitter" class="wave-effect"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="WhatsApp" class="wave-effect"><i class="fab fa-whatsapp"></i></a>
-            </div>
         </div>
-        
 
         @using (Html.BeginForm("Contact", "Home", FormMethod.Post, new { id = "contactForm" }))
         {
@@ -55,23 +42,22 @@
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Correo)
-                    @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", placeholder = "Correo", type = "email", required = "required" })
+                    @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", placeholder = "ejemplo@correo.com", type = "email", required = "required" })
                     @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Celular)
-                    @Html.TextBoxFor(m => m.Celular, new { @class = "form-control", placeholder = "Tu numero de celular", type = "tel", pattern = "[0-9]{10}" })
+                    @Html.TextBoxFor(m => m.Celular, new { @class = "form-control", placeholder = "Ej: 3001234567", type = "tel", pattern = "[0-9]{10}" })
                     @Html.ValidationMessageFor(m => m.Celular, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Asunto)
                     @Html.DropDownListFor(m => m.Asunto, new SelectList(new[] {
-                        new { Value = "Error en la aplicación", Text = "🐛 Error en la aplicación" },
-                        new { Value = "Problema con pagos", Text = "💳 Problema con pagos" },
-                        new { Value = "Sugerencia de mejora", Text = "💡 Sugerencia de mejora" },
-                        new { Value = "Problema de cuenta", Text = "🔐 Problema de cuenta" },
-                        new { Value = "Error en entrenamiento", Text = "🏋️ Error en entrenamiento" },
-                        new { Value = "Otro problema", Text = "❓ Otro problema" }
+                        new SelectListItem { Text = "Seleccione un asunto...", Value = "" },
+                        new SelectListItem { Text = "Error en la aplicación", Value = "Error en la aplicación" },
+                        new SelectListItem { Text = "Problema con pagos", Value = "Problema con pagos" },
+                        new SelectListItem { Text = "Sugerencia de mejora", Value = "Sugerencia de mejora" },
+                        new SelectListItem { Text = "Otro problema", Value = "Otro problema" }
                     }, "Value", "Text"), new { @class = "form-control", required = "required" })
                     @Html.ValidationMessageFor(m => m.Asunto, "", new { @class = "text-danger" })
                 </div>
@@ -87,20 +73,20 @@
         }
     </div>
 
-    <!-- Script de Partículas -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Inicializar partículas
         particlesJS("particles-js", {
             "particles": {
-                "number": { "value": 300, "density": { "enable": true, "value_area": 1000 } },
-                "color": { "value": "#DC143C" },
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#FF6B6B" },
                 "shape": { "type": "circle" },
                 "opacity": {
-                    "value": 1,
+                    "value": 0.5,
                     "random": true,
-                    "anim": { "enable": true, "speed": 2, "opacity_min": 0 }
+                    "anim": { "enable": true, "speed": 1, "opacity_min": 0.1 }
                 },
                 "size": {
                     "value": 3,
@@ -130,7 +116,7 @@
                     "resize": true
                 },
                 "modes": {
-                    "grab": { "distance": 150, "line_linked": { "opacity": 5 } },
+                    "grab": { "distance": 140, "line_linked": { "opacity": 1 } },
                     "push": { "particles_nb": 4 }
                 }
             },

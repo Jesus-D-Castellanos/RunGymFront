@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace RunGymFront.Models
 {
@@ -33,16 +34,17 @@ namespace RunGymFront.Models
         public string CuerpoDeseado { get; set; }
 
         [Display(Name = "Descripción")]
+        [Required(ErrorMessage = "El {0} es requerido")]
         [StringLength(1000, ErrorMessage = "La {0} no puede exceder 1000 caracteres")]
         public string Descripción { get; set; }
 
-        [Display(Name = "Fecha del Objetivo")]
+        [Display(Name = "Fecha de tu Objetivo")]
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime FechaObjetivo { get; set; } = DateTime.UtcNow;
 
         [Display(Name = "Fecha de Registro")]
-        public DateTime FechaRegistro { get; set; } = DateTime.Now;
+        public DateTime FechaCreacion { get; set; } = DateTime.Now;
     }
 }

@@ -3,205 +3,235 @@
     Layout = null;
 }
 
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - RunGym</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/Content/css/Registro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/css/Registro.css"/>
 </head>
+<body>
 
-<div class="container text-center mt-5">
-    <div class="logo-container text-center mb-4">
-        <img src="~/images/Login/Logo.png" alt="RunGym Logo" class="logo img-fluid" aria-label="RunGym Logo">
+    <div class="container text-center mt-5">
+        <div class="logo-container">
+            <img src="/images/Login/Logo.png" alt="RunGym Logo" class="logo img-fluid" aria-label="RunGym Logo">
+        </div>
+
+        <h2>Regístrate</h2>
+
+        @using (Html.BeginForm("Registro", "Registro", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-row">
+                <!-- Nombre y Apellido -->
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.Nombre)
+                    @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ej: Juan", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.Apellido)
+                    @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", placeholder = "Ej: Pérez", required = "required" })
+                    @Html.ValidationMessageFor(m => m.Apellido, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Tipo Documento y Documento -->
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.TipoDocumento)
+                    @Html.DropDownListFor(m => m.TipoDocumento, new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Seleccione tipo de documento", Value = "" },
+                        new SelectListItem { Text = "Cédula", Value = "Cedula" },
+                        new SelectListItem { Text = "Pasaporte", Value = "Pasaporte" },
+                        new SelectListItem { Text = "DNI", Value = "DNI" }
+                    }, new { @class = "form-select" })
+                    @Html.ValidationMessageFor(m => m.TipoDocumento, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.Documento)
+                    @Html.TextBoxFor(m => m.Documento, new { @class = "form-control", placeholder = "Número de documento" })
+                    @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Correo y Contraseña -->
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.Correo)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", placeholder = "ejemplo@correo.com", type = "email" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.Contraseña)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        @Html.PasswordFor(m => m.Contraseña, new { @class = "form-control", placeholder = "Mínimo 4 caracteres" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Contraseña, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Confirmar contraseña y celular -->
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ConfirmarContraseña)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        @Html.PasswordFor(m => m.ConfirmarContraseña, new { @class = "form-control", placeholder = "Repita su contraseña" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.ConfirmarContraseña, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.Celular)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                        @Html.TextBoxFor(m => m.Celular, new { @class = "form-control", placeholder = "Ej: 3001234567", type = "tel" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Celular, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Género y Fecha Nacimiento -->
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.Genero)
+                    @Html.DropDownListFor(m => m.Genero, new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Seleccione su género", Value = "" },
+                        new SelectListItem { Text = "Masculino", Value = "Masculino" },
+                        new SelectListItem { Text = "Femenino", Value = "Femenino" },
+                        new SelectListItem { Text = "Otro", Value = "Otro" }
+                    }, new { @class = "form-select" })
+                    @Html.ValidationMessageFor(m => m.Genero, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.FechaNacimiento)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                        @Html.TextBoxFor(m => m.FechaNacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.FechaNacimiento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Peso y Altura -->
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.Peso)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-weight"></i></span>
+                        @Html.TextBoxFor(m => m.Peso, new { @class = "form-control", placeholder = "Ej: 76", type = "number", step = "any" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Peso, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.Altura)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-ruler-vertical"></i></span>
+                        @Html.TextBoxFor(m => m.Altura, new
+                        {
+                            @class = "form-control",
+                            placeholder = "Ej: 1.75",
+                            type = "number",
+                            step = "0.01",
+                            lang = "en-US"
+                        })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Altura, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Horas sueño y Consumo de agua -->
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.HorasSueno)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-bed"></i></span>
+                        @Html.TextBoxFor(m => m.HorasSueno, new { @class = "form-control", placeholder = "Ej: 7", type = "number", step = "any" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.HorasSueno, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(m => m.ConsumoAgua)
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-tint"></i></span>
+                        @Html.TextBoxFor(m => m.ConsumoAgua, new { @class = "form-control", placeholder = "Ej: 2.5", type = "text" })
+                    </div>
+                    @Html.ValidationMessageFor(m => m.ConsumoAgua, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group form-check text-left">
+                <input type="checkbox" class="form-check-input" id="terminos" required>
+                <label class="form-check-label" for="terminos">Acepto los términos y condiciones</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+        }
     </div>
 
-    <h2>Registrate</h2>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <script>
 
-    @using (Html.BeginForm("Registro", "Registro", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
+        // Validación personalizada para contraseñas coincidentes
+        $(document).ready(function () {
+            createBubbles();
 
-        <div class="form-row">
-            <!-- Nombre y Apellido -->
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.Nombre)
-                @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Ej: Juan", required = "required" })
-                @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.Apellido)
-                @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control", placeholder = "Ej: Pérez", required = "required" })
-                @Html.ValidationMessageFor(m => m.Apellido, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            <!-- Tipo Documento y Documento -->
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.TipoDocumento)
-                @Html.DropDownListFor(m => m.TipoDocumento, new List<SelectListItem>
-                {
-                    new SelectListItem { Text = "Seleccione tipo de documento", Value = "" },
-                    new SelectListItem { Text = "Cédula", Value = "Cedula" },
-                    new SelectListItem { Text = "Pasaporte", Value = "Pasaporte" },
-                    new SelectListItem { Text = "DNI", Value = "DNI" }
-                }, new { @class = "form-select" })
-                @Html.ValidationMessageFor(m => m.TipoDocumento, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.Documento)
-                @Html.TextBoxFor(m => m.Documento, new { @class = "form-control", placeholder = "Número de documento" })
-                @Html.ValidationMessageFor(m => m.Documento, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            <!-- Correo y Contraseñar -->
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.Correo)
-                @Html.TextBoxFor(m => m.Correo, new { @class = "form-control", placeholder = "ejemplo@correo.com", type = "email" })
-                @Html.ValidationMessageFor(m => m.Correo, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Contraseña)
-                @Html.PasswordFor(m => m.Contraseña, new { @class = "form-control", placeholder = "Mínimo 4 caracteres" })
-                @Html.ValidationMessageFor(m => m.Contraseña, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            <!--confirmar contraseña y celular -->
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.ConfirmarContraseña)
-                @Html.PasswordFor(m => m.ConfirmarContraseña, new { @class = "form-control", placeholder = "Repita su contraseña" })
-                @Html.ValidationMessageFor(m => m.ConfirmarContraseña, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.Celular)
-                @Html.TextBoxFor(m => m.Celular, new { @class = "form-control", placeholder = "Ej: 3001234567", type = "tel" })
-                @Html.ValidationMessageFor(m => m.Celular, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            <!-- Género y Fecha Nacimiento -->
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.Genero)
-                @Html.DropDownListFor(m => m.Genero, new List<SelectListItem>
-                {
-                    new SelectListItem { Text = "Seleccione su género", Value = "" },
-                    new SelectListItem { Text = "Masculino", Value = "Masculino" },
-                    new SelectListItem { Text = "Femenino", Value = "Femenino" },
-                    new SelectListItem { Text = "Otro", Value = "Otro" }
-                }, new { @class = "form-select" })
-                @Html.ValidationMessageFor(m => m.Genero, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.FechaNacimiento)
-                @Html.TextBoxFor(m => m.FechaNacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-                @Html.ValidationMessageFor(m => m.FechaNacimiento, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            <!-- Peso y Altura -->
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.Peso)
-                @Html.TextBoxFor(m => m.Peso, new { @class = "form-control", placeholder = "Ej: 76", type = "number", step = "any" })
-                @Html.ValidationMessageFor(m => m.Peso, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.Altura)
-                @Html.TextBoxFor(m => m.Altura, new
-                {
-                    @class = "form-control",
-                    placeholder = "Ej: 1.75",
-                    type = "number",
-                    step = "0.01",
-                    lang = "en-US" // Fuerza el uso de punto decimal
-                })
-                @Html.ValidationMessageFor(m => m.Altura, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            <!--Horas sueño y Consumo de agua-->
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.HorasSueno)
-                @Html.TextBoxFor(m => m.HorasSueno, new { @class = "form-control", placeholder = "Ej: 7", type = "number", step = "any" })
-                @Html.ValidationMessageFor(m => m.HorasSueno, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(m => m.ConsumoAgua)
-                @Html.TextBoxFor(m => m.ConsumoAgua, new { @class = "form-control", placeholder = "Ej: 2.5", type = "text" })
-                @Html.ValidationMessageFor(m => m.ConsumoAgua, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group form-check text-left">
-            <input type="checkbox" class="form-check-input" id="terminos" required>
-            <label class="form-check-label" for="terminos">Acepto los términos y condiciones</label>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
-
-    }
-</div>
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
-<script>
-    // Validación personalizada para contraseñas coincidentes
-    $(document).ready(function () {
-        $("form").validate({
-            rules: {
-                ConfirmarContraseña: {
-                    equalTo: "#Contraseña"
-                }
-            },
-            messages: {
-                ConfirmarContraseña: {
-                    equalTo: "Las contraseñas no coinciden"
-                }
-            }
-        });
-    });
-    document.addEventListener("DOMContentLoaded", function () {
-        // Efecto al enfocar los inputs
-        const inputs = document.querySelectorAll('.form-control');
-        const labels = document.querySelectorAll('.form-group label');
-
-        inputs.forEach(input => {
-            input.addEventListener('focus', function () {
-                const label = this.parentElement.querySelector('label');
-                if (label) {
-                    label.style.textShadow = '0 0 8px rgba(67, 97, 238, 0.9)';
+            $("form").validate({
+                rules: {
+                    ConfirmarContraseña: {
+                        equalTo: "#Contraseña"
+                    }
+                },
+                messages: {
+                    ConfirmarContraseña: {
+                        equalTo: "Las contraseñas no coinciden"
+                    }
                 }
             });
 
-            input.addEventListener('blur', function () {
-                const label = this.parentElement.querySelector('label');
-                if (label) {
-                    label.style.textShadow = 'none';
+            // Efectos de hover en los inputs
+            $('.form-control').hover(
+                function () {
+                    $(this).css({
+                        'border-color': 'var(--primary-color)',
+                        'box-shadow': 'inset 0 0 15px rgba(67, 97, 238, 0.2), 0 0 15px rgba(67, 97, 238, 0.3)'
+                    });
+                    $(this).prev('label').css('text-shadow', 'var(--text-glow)');
+                },
+                function () {
+                    if (!$(this).is(':focus')) {
+                        $(this).css({
+                            'border-color': 'rgba(67, 97, 238, 0.3)',
+                            'box-shadow': 'inset 0 0 10px rgba(0, 0, 0, 0.2), 0 0 10px rgba(67, 97, 238, 0.2)'
+                        });
+                        $(this).prev('label').css('text-shadow', 'none');
+                    }
                 }
+            );
+
+            // Efecto al enfocar los inputs
+            $('.form-control').focus(function () {
+                $(this).prev('label').css('text-shadow', 'var(--text-glow)');
+            }).blur(function () {
+                $(this).prev('label').css('text-shadow', 'none');
             });
         });
-
-        // También podemos agregar hover effects para mejor UX
-        inputs.forEach(input => {
-            input.addEventListener('mouseenter', function () {
-                this.style.borderColor = '#4361ee';
-                this.style.boxShadow = 'inset 0 0 15px rgba(67, 97, 238, 0.2)';
-            });
-
-            input.addEventListener('mouseleave', function () {
-                if (!this.matches(':focus')) {
-                    this.style.borderColor = 'rgba(67, 97, 238, 0.3)';
-                    this.style.boxShadow = 'inset 0 0 10px rgba(0, 0, 0, 0.2)';
-                }
-            });
-        });
-    });
-</script>
+    </script>
+</body>
+</html>

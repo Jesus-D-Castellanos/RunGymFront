@@ -12,19 +12,8 @@ namespace RunGymFront.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-
-        [Required]
-        [ForeignKey("Rutina")]
-        public int IdRutina { get; set; }
-
-
-        [Required]
-        [StringLength(100)]
-        public string Nombre_Ejercicio { get; set; }
-
-
-        [StringLength(500)]
-        public string Descripcion { get; set; }
+        public string Nombre { get; set; }
+        public string Categoria { get; set; }
+        public string? ImagenURL { get; set; }
     }
 }

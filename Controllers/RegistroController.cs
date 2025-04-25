@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RunGymFront.Models;
+using RunGymFront.Utils;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -33,6 +34,8 @@ namespace RunGymFront.Controllers
                     client.BaseAddress = new Uri(apiUrl);
                     client.DefaultRequestHeaders.Clear();
 
+                    model.Contraseña = Encriptador.Encriptar(model.Contraseña);
+
                     string json = JsonConvert.SerializeObject(model);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -46,7 +49,7 @@ namespace RunGymFront.Controllers
 
                     // Lógica para guardar el usuario...
 
-                    return RedirectToAction("Metas", "Metas");
+                    return RedirectToAction("Login", "Login");
                 }
             }
             catch (Exception ex)
